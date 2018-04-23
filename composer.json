@@ -1,0 +1,30 @@
+{
+    "name": "slacker775/oauth2-sharefile",
+    "description": "ShareFile OAuth 2.0 Client Provider for the PHP League OAuth2-Client",
+    "type": "library",
+    "keywords": [
+        "oauth",
+        "oauth2",
+        "sharefile"
+    ],    
+    "require": {
+        "league/oauth2-client": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fpdr\\OAuth2\\Client\\" : "src/"
+        }
+    },
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "David Hollis",
+            "email": "dhollis@davehollis.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "mockery/mockery": "~0.9",
+        "squizlabs/php_codesniffer": "~2.0"
+    }
+}
