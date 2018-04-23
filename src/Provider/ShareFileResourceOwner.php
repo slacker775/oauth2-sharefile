@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fpdr\OAuth2\Client\Provider;
+namespace Slacker775\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;

@@ -1,10 +1,11 @@
 <?php
-namespace Fpdr\OAuth2\Client\Test\Provider;
+namespace Slacker775\OAuth2\Client\Test\Provider;
 
 use League\OAuth2\Client\Tool\QueryBuilderTrait;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
-class ShareFileTest extends \PHPUnit_Framework_TestCase
+class ShareFileTest extends TestCase
 {
     use QueryBuilderTrait;
 
@@ -12,7 +13,7 @@ class ShareFileTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->provider = new \Fpdr\OAuth2\Client\Provider\ShareFile([
+        $this->provider = new \Slacker775\OAuth2\Client\Provider\ShareFile([
             'clientId' => 'mock_client_id',
             'clientSecret' => 'mock_secret',
             'redirectUri' => 'none',

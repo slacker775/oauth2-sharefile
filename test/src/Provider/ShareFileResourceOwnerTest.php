@@ -1,13 +1,14 @@
 <?php 
-namespace Fpdr\OAuth2\Client\Test\Provider;
+namespace Slacker775\OAuth2\Client\Test\Provider;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
-class ShareFileResourceOwnerTest extends \PHPUnit_Framework_TestCase
+class ShareFileResourceOwnerTest extends TestCase
 {
     public function testUrlIsNullWithoutDomainOrNickname()
     {
-        $user = new \Fpdr\OAuth2\Client\Provider\ShareFileResourceOwner();
+        $user = new \Slacker775\OAuth2\Client\Provider\ShareFileResourceOwner();
 
         $url = $user->getUrl();
 
@@ -17,7 +18,7 @@ class ShareFileResourceOwnerTest extends \PHPUnit_Framework_TestCase
     public function testUrlIsDomainWithoutNickname()
     {
         $domain = uniqid();
-        $user = new \Fpdr\OAuth2\Client\Provider\ShareFileResourceOwner();
+        $user = new \Slacker775\OAuth2\Client\Provider\ShareFileResourceOwner();
         $user->setDomain($domain);
 
         $url = $user->getUrl();
@@ -28,7 +29,7 @@ class ShareFileResourceOwnerTest extends \PHPUnit_Framework_TestCase
     public function testUrlIsNicknameWithoutDomain()
     {
         $nickname = uniqid();
-        $user = new \Fpdr\OAuth2\Client\Provider\ShareFileResourceOwner(['login' => $nickname]);
+        $user = new \Slacker775\OAuth2\Client\Provider\ShareFileResourceOwner(['login' => $nickname]);
 
         $url = $user->getUrl();
 
