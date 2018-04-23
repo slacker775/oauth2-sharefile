@@ -15,7 +15,7 @@
             "Slacker775\\OAuth2\\Client\\" : "src/"
         }
     },
-    "license": "GPL",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "David Hollis",
