@@ -1,1 +1,104 @@
-# oauth2-sharefile
+# ShareFile Provider for OAuth 2.0 Client
+
+[![Latest Version](https://img.shields.io/github/release/stevenmaguire/oauth2-box.svg?style=flat-square)](https://github.com/stevenmaguire/oauth2-box/releases)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Build Status](https://img.shields.io/travis/stevenmaguire/oauth2-box/master.svg?style=flat-square)](https://travis-ci.org/stevenmaguire/oauth2-box)
+[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/stevenmaguire/oauth2-box.svg?style=flat-square)](https://scrutinizer-ci.com/g/stevenmaguire/oauth2-box/code-structure)
+[![Quality Score](https://img.shields.io/scrutinizer/g/stevenmaguire/oauth2-box.svg?style=flat-square)](https://scrutinizer-ci.com/g/stevenmaguire/oauth2-box)
+[![Total Downloads](https://img.shields.io/packagist/dt/stevenmaguire/oauth2-box.svg?style=flat-square)](https://packagist.org/packages/stevenmaguire/oauth2-box)
+
+This package provides ShareFile OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
+
+## Installation
+
+To install, use composer:
+
+```
+composer require slacker775/oauth2-sharefile
+```
+
+## Usage
+
+Usage is the same as The League's OAuth client, using `\Fpdr\OAuth2\Client\Provider\ShareFile` as the provider.
+
+### Authorization Code Flow
+
+```php
+
+    $options = [
+        'clientId' => 'xxxxxxxxxxxxxxxxx',
+        'clientSecret' => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+    ];
+    
+    $provider = new Fpdr\OAuth2\Client\Provider\ShareFile($options);
+    
+    $accessToken = $provider->getAccessToken('password', [
+        'username' => 'jsmith@example.com',
+        'password' => 'XXXXXXXXXXXXXXXXXXXXX',
+        'baseurl' => 'example.sharefile.com'
+    ]);
+        
+    $url = sprintf('https://%s.sf-api.com/sf/v3/Items(home)', $accessToken->getValues()['subdomain']);
+    $request = $provider->getAuthenticatedRequest('GET', $url, $accessToken);
+    
+$provider = new Stevenmaguire\OAuth2\Client\Provider\Box([
+    'clientId'          => '{box-client-id}',
+    'clientSecret'      => '{box-client-secret}',
+    'redirectUri'       => 'https://example.com/callback-url'
+]);
+
+if (!isset($_GET['code'])) {
+
+    // If we don't have an authorization code then get one
+    $authUrl = $provider->getAuthorizationUrl();
+    $_SESSION['oauth2state'] = $provider->getState();
+    header('Location: '.$authUrl);
+    exit;
+
+// Check given state against previously stored one to mitigate CSRF attack
+} elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
+
+    unset($_SESSION['oauth2state']);
+    exit('Invalid state');
+
+} else {
+
+    // Try to get an access token (using the authorization code grant)
+    $token = $provider->getAccessToken('authorization_code', [
+        'code' => $_GET['code']
+    ]);
+
+    // Optional: Now you have a token you can look up a users profile data
+    try {
+
+        // We got an access token, let's now get the user's details
+        $user = $provider->getResourceOwner($token);
+
+        // Use these details to create a new profile
+        printf('Hello %s!', $user->getId());
+
+    } catch (Exception $e) {
+
+        // Failed to get user details
+        exit('Oh dear...');
+    }
+
+    // Use this to interact with an API on the users behalf
+    echo $token->getToken();
+}
+```
+
+## Testing
+
+``` bash
+$ ./vendor/bin/phpunit
+```
+
+## Credits
+
+- [David Hollis](https://github.com/slacker775)
+
+
+## License
+
+The MIT License (MIT). Please see [License File](https://github.com/stevenmaguire/oauth2-box/blob/master/LICENSE) for more information.
