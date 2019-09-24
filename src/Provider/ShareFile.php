@@ -62,8 +62,10 @@ class ShareFile extends AbstractProvider
      */
     protected function checkResponse(ResponseInterface $response, $data)
     {
-        if (isset($data['error'])) 
-            throw new IdentityProviderException($data['error_description'], $response->getStatusCode(), $response);        
+        if (isset($data['error'])) {
+            $message = $data['error_description'] ?? $data['error'];
+            throw new IdentityProviderException($message, $response->getStatusCode(), $response);           
+        }
     }
 
     /**
